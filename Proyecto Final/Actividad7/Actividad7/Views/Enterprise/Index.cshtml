@@ -1,0 +1,68 @@
+﻿@using Actividad7.Models;
+@model List<Enterprise>
+
+@{
+    ViewData["title"] = "Index";
+}
+
+<div class="col-sm-6">
+    <a class="btn btn-primary" asp-area="" asp-controller="Enterprise" asp-action="Create">Crear empresa</a>
+</div>
+
+    @if(Model.Count != 0)
+    {
+        <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nit</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Direccion</th>
+        </tr>
+      </thead>
+      <tbody>
+          @foreach(var e in Model)
+          {
+            <tr>
+              <td>@e.Id</td>
+              <td>@e.Nit</td>
+              <td>@e.Name</td>
+              <td>@e.Direccion</td>
+              <td>
+                  <a asp-route-id= "@e.Id" asp-action="Update" 
+                  class="btn btn-success btnsm">Editar</a>
+
+                  <input onclick="jsDelete(@e.Id);" type="button" value="Eliminar" class="btn btn-danger" />
+              </td>
+            </tr>
+            }
+      </tbody>
+    </table>
+    }
+    else{
+        <div class="card">
+              <div class="card-body">
+                No hay datos.
+              </div>
+        </div>
+    }
+
+
+<script>
+    function jsDelete(id) {
+        if (confirm("Esta seguro de borrar la empresa?")) {
+            url = "@Url.Content("~/Enterprise/Delete")" + "/" + id;
+
+            $.post(url, function(data) {
+
+                if (data == "1") {
+                    document.location.href="@Url.Content("~/Enterprise/")"
+                } else {
+                    alert("Ocurrio un error")
+                }
+
+            })
+        }
+        
+    }
+</script>
