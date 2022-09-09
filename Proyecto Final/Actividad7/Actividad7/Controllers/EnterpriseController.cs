@@ -67,8 +67,8 @@ namespace Actividad7.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var consulta = await enterpriseService.GetById(id);
-            var enterprise = Enterprise.Build(id, consulta.Nit, consulta.Name, consulta.Direccion);
-            await this.enterpriseService.Delete(enterprise);
+           // var enterprise = Enterprise.Build(id, consulta.Nit, consulta.Name, consulta.Direccion);
+            await this.enterpriseService.Delete(consulta);
             return Content("1");
         }
     }
